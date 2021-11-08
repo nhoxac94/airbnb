@@ -27,7 +27,16 @@ export default function RoomDetails() {
     console.log("roomDetails", roomDetails);
     console.log("roomReviews", roomReviews);
 
+
     if (!roomDetails || !roomReviews) return <Loader />
+    let keys = Object.keys(roomDetails);
+    const utils = []
+    for (let key of keys) {
+        if (roomDetails[key] === true) {
+            let keyFirstUpperChar = key.charAt().toUpperCase() + key.slice(1)
+            utils.push(keyFirstUpperChar)
+        }
+    }
     return (
         <div className="roomDetails">
             <h3>{roomDetails.name}</h3>
@@ -53,10 +62,24 @@ export default function RoomDetails() {
             </div>
             <div className="roomUtils">
                 <div className="roomInformation">
-                    <p>{roomDetails.guests} khách - {roomDetails.bedRoom} phòng ngủ - {roomDetails.bath} phòng tắm</p>
-                    <p>{roomDetails.description}</p>
+                    <div className="roomInformation--details">
+                        <h5>{roomDetails.name}</h5>
+                        <p>{roomDetails.guests} khách - {roomDetails.bedRoom} phòng ngủ - {roomDetails.bath} phòng tắm</p>
+                        <u>Description:</u>
+                        <span>
+                            {` ${roomDetails.description}`}</span>
+                    </div>
+
+                    <div className="utils">
+                        <h5>Tiện ích: </h5>
+                        {utils.map((util, index) => {
+                            return (
+                                <div key={index}>. {util}</div>
+                            )
+                        })}
+                    </div>
                     <div className="datePicker">
-                        <p>Chọn ngày nhận phòng</p>
+                        <h5>Chọn ngày nhận phòng</h5>
                     </div>
                 </div>
                 <div className="roomBooking">
