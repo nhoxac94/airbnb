@@ -10,6 +10,8 @@ import 'antd/dist/antd.css';
 import { Provider } from "react-redux"
 import store from 'store';
 import reportWebVitals from './reportWebVitals';
+import 'react-dates/initialize';
+
 
 ReactDOM.render(
   <React.StrictMode>

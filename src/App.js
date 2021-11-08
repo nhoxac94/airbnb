@@ -1,23 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Footer from "components/Footer/Footer";
+import DatePickerCheck from "components/Header/DatePicker";
+
+import Header from "components/Header/Header";
+import Home from "containers/client/Home/Home";
+import RoomDetails from "containers/client/RoomDetails.jsx/RoomDetails";
+import Rooms from "containers/client/Rooms/Rooms";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Header />
+        <Switch>
+          {/* <DatePickerCheck/>  */}
+          {/* <Rooms/> */}
+          {/* <RoomDetails/> */}
+          {/* <Footer/> */}
+          <Route path="/" exact component={Home} />
+          <Route path="/location/:idLocation" exact component={Rooms} />
+          <Route path="/rooms/:idRoom" exact component={RoomDetails} />
+
+        </Switch>
+        <Footer/>
+      </Router>
     </div>
   );
 }

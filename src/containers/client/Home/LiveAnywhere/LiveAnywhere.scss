@@ -1,0 +1,9 @@
+.liveAnywhere__wrap {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  .liveAnywhere__content {
+      img {
+          width: 100%;
+      }
+  }
+}

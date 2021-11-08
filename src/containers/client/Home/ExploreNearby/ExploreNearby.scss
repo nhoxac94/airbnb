@@ -1,0 +1,21 @@
+.exploreNearby__content {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  .cardPlace {
+    display: flex;
+    margin-bottom: 1em;
+  }
+
+  .cardPlace {
+    
+    .cardPlace__img {
+      img {
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
+}
+
+
+
