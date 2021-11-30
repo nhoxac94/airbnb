@@ -5,13 +5,14 @@ const callApi = (
   endpoint,
   method = "GET",
   data = null,
-  token = TOKEN_BY_CLASS
+  tokenType,
+  tokenClass = TOKEN_BY_CLASS
 ) => {
   return axios({
     url: `${BASE_URL}/${endpoint}`,
     method,
     data,
-    headers: { tokenByClass: token },
+    headers: { tokenByClass: tokenClass, token : tokenType  },
   });
 };
 

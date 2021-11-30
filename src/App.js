@@ -1,28 +1,38 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Footer from "components/Footer/Footer";
-import DatePickerCheck from "components/Header/DatePicker";
 
-import Header from "components/Header/Header";
-import Home from "containers/client/Home/Home";
-import RoomDetails from "containers/client/RoomDetails.jsx/RoomDetails";
-import Rooms from "containers/client/Rooms/Rooms";
+
+import { adminRouters, clientRouters, loginRouters } from "routers";
+import PageNotFound from "containers/share/PageNotFound/PageNotFound";
+import LoginLayout from "layout/Login/LoginLayout";
+import AdminLayout from "layout/Admin/AdminLayout";
+import ClientLayout from "layout/Client/ClientLayout";
 
 function App() {
+  const renderLayout = (routes, Layout) => {
+    return routes.map((routes, idx) => {
+      const { path, component, exact, isPrivate } = routes;
+      return (
+        <Layout
+          key={component}
+          path={path}
+          exact={exact}
+          component={component}
+          isPrivate={isPrivate}
+        />
+      );
+    });
+  };
   return (
     <div className="App">
       <Router>
-        <Header />
         <Switch>
-          {/* <DatePickerCheck/>  */}
-          {/* <Rooms/> */}
-          {/* <RoomDetails/> */}
-          {/* <Footer/> */}
-          <Route path="/" exact component={Home} />
-          <Route path="/location/:idLocation" exact component={Rooms} />
-          <Route path="/rooms/:idRoom" exact component={RoomDetails} />
+          {renderLayout(clientRouters, ClientLayout)}
+          {renderLayout(loginRouters, LoginLayout)}
+          {renderLayout(adminRouters, AdminLayout)}
 
+         
+          <Route path="*" component={PageNotFound} />
         </Switch>
-        <Footer/>
       </Router>
     </div>
   );

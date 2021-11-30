@@ -1,9 +1,22 @@
-.liveAnywhere__wrap {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  .liveAnywhere__content {
+.liveAnywhere {
+  h3 {
+    font-weight: 700;
+    margin: 30px 0;
+  }
+  .liveAnywhere__wrap {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 20px;
+    .liveAnywhere__content {
       img {
-          width: 100%;
+        width: 100%;
+        border-radius: 10px;
       }
+      p {
+        font-size: 1rem;
+        text-align: center;
+        font-weight: 600;
+      }
+    }
   }
 }

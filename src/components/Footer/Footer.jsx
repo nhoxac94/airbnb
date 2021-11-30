@@ -6,8 +6,8 @@ import './Footer.scss'
 
 export default function Footer() {
     return (
-        <div className="footer" style={{ maxWidth: 1600, margin: "auto" }}>
-            <div className="row">
+        <div className="footer" >
+            <div className="row border-bottom pb-3 " style={{ maxWidth: 1600, margin: "auto" }}>
                 <div className="col-3">
                     <ul>
                         <h4>GIỚI THIỆU</h4>
@@ -58,12 +58,15 @@ export default function Footer() {
                     </ul>
                 </div>
             </div>
-            <div className="copyright ">
+            <div className="copyright " style={{ maxWidth: 1600, margin: "auto" }}>
                 <div className="copyright__nav">
                     <ul>
                         <li>© 2021 Airbnb, Inc.</li>
+                        <li> . </li>
                         <li>Quyền riêng tư</li>
+                        <li> . </li>
                         <li>Điều khoản</li>
+                        <li> . </li>
                         <li>Sơ đồ trang web</li>
                     </ul>
                 </div>

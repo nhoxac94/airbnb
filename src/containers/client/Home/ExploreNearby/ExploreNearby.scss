@@ -1,21 +1,32 @@
-.exploreNearby__content {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  .cardPlace {
-    display: flex;
-    margin-bottom: 1em;
+.exploreNearby {
+  h3 {
+    margin: 30px 0;
+    font-weight: 700;
   }
+  .exploreNearby__content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    .cardPlace {
+      display: flex;
+      margin-bottom: 1em;
+    }
 
-  .cardPlace {
-    
-    .cardPlace__img {
-      img {
-        width: 100px;
-        height: 100px;
+    .cardPlace {
+      .cardPlace__img {
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 10px;
+        }
+      }
+
+      .cardPlace__content {
+        margin-left: 10px;
+      }
+      p {
+        color : black
       }
     }
+
   }
 }
-
-
-

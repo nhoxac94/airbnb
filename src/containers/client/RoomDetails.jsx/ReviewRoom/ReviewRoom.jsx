@@ -7,10 +7,10 @@ export default function ReviewRoom({review}) {
         <div className="reviewRoom--item" >
             <div className="reviewRoom--item-userInformation">
                 <div className="avatar">
-                    <img src={review.userId.avatar} alt="" />
+                    <img src={review.userId?.avatar} alt="" />
                 </div>
                 <div className="nameUser">
-                    <p>{review.userId.name}</p>
+                    <p>{review.userId?.name}</p>
                     <p>{moment(review.created_at).format("DD - MM - YYYY")}</p>
 
                 </div>

@@ -1,36 +1,45 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 import './Header.scss'
 import { FiGlobe, FiSearch } from 'react-icons/fi'
 import { VscListFlat } from 'react-icons/vsc'
 import { FaAirbnb, FaUserCircle } from 'react-icons/fa'
-import { BiMinus, BiPlus } from 'react-icons/bi'
 import { MdLocationOn } from 'react-icons/md'
 import locationApi from 'apis/locationApi'
-import { DayPickerRangeController } from 'react-dates';
-import 'react-dates/lib/css/_datepicker.css';
 import moment from 'moment'
+import DatePicker from 'components/DatePicker/DatePicker'
+import Guest from 'components/Guests/Guest'
 
 
 
 export default function Header() {
+
     const [activeNavForm, setActiveNavForm] = useState("")
-    const [informationBooking, setInformationBooking] = useState({
-        location: "",
-        checkIn: "",
-        checkOut: "",
-        guest: "",
-    })
     const [searchLocation, setSearchLocation] = useState('')
     const [resultSearchLocation, setResultSearchLocation] = useState([])
+    const [locationId, setLocationId] = useState("")
     const [location, setLocation] = useState("")
+    const [scrolling, setScrolling] = useState(false)
+
+    const formRef = useRef(null)
+
+    const dispatch = useDispatch()
     const handleChooseLocation = (location) => {
         setLocation(location.name)
         setActiveNavForm("checkIn")
-        setInformationBooking({...informationBooking, location : location})
+        setLocationId(location._id)
     }
+    const bgHeader = useSelector(state => state.bgHeaderReducer.bgHeader)
+    useEffect(() => {
+        setScrolling(bgHeader)
+    }, [bgHeader])
 
-    const formRef = useRef(null)
+    const locationBooking = useSelector(state => state.locationReducer)
+    useEffect(() => {
+        setLocation(locationBooking.location)
+        setLocationId(locationBooking.locationId)
+    }, [])
 
     useEffect(() => {
         const handleClickOutSide = e => {
@@ -49,93 +58,54 @@ export default function Header() {
             .catch(err => console.log(err))
     }, [searchLocation])
 
-    // handle daterange picker
-    const [startDate, setStartDate] = useState(null)
-    const [endDate, setEndDate] = useState(null)
-    const [focusedInput, setFocusedInput] = useState('startDate')
-    const handleOnDatesChange = (startDate, endDate) => {
-        setStartDate(startDate)
-        setEndDate(endDate)
-
-    }
-    const handleFocusChange = focusedInput => {
-        setFocusedInput(focusedInput || 'endDate')
-    }
-
-    const isBeforeDay = (a, b) => {
-        if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-        const aYear = a.year();
-        const aMonth = a.month();
-        const bYear = b.year();
-        const bMonth = b.month();
-        const isSameYear = aYear === bYear;
-        const isSameMonth = aMonth === bMonth;
-        if (isSameYear && isSameMonth) return a.date() < b.date();
-        if (isSameYear) return aMonth < bMonth;
-        return aYear < bYear;
-    }
-    const isInclusivelyAfterDay = (a, b) => {
-        if (!moment.isMoment(a) || !moment.isMoment(b)) return false;
-        return !isBeforeDay(a, b);
-    }
-
+    
     const handleSearch = (e) => {
         setSearchLocation(e.target.value);
         setLocation(e.target.value)
+        setLocationId(e.target._id)
+    }
+
+    const handleSearchRoom = () => {
+        {
+            formRef.current.elements.locationNav.focus()
+            if (!location) {
+                alert("Vui lòng chọn địa điêm")
+            } else {
+                dispatch({ type: "LOCATION_BOOKING", payload: { location: location, locationId: locationId } })
+                setActiveNavForm("")
+            }
+        }
+    }
+
+    const clearReducer = () => {
+        dispatch({ type: "CLEAR_REDUX" })
+
     }
 
     const handleNavForm = activeNav => {
         setActiveNavForm(activeNav)
     }
 
-
-    // handle pick number guest
-
-    const [numberGuest, setNumberGuest] = useState({
-        adults: 0,
-        children: 0,
-        infants: 0
-    })
-
-    const handleNumberGuest = (type, people) => {
-        const newNumberGuest = { ...numberGuest }
-        if (type === 'plus') {
-            if (people !== "adults" && newNumberGuest.adults === 0) {
-                newNumberGuest[people] += 1
-                newNumberGuest.adults += 1
-            } else {
-                newNumberGuest[people] += 1
-            }
-        } else if (type === "minus") {
-            if (newNumberGuest[people] > 0) {
-                newNumberGuest[people] -= 1
-            }
-        }
-        setNumberGuest(newNumberGuest)
-
+    const airbnbUser = useSelector(state => state.airbnbUserReducer.airbnbUser)
+    const handleLogout = () => {
+        localStorage.setItem("AIRBNB_USER", "")
+        dispatch({type : "LOGOUT"})
     }
 
-    const handleSubmitForm = () => {
-       setActiveNavForm("")
-       console.log(123);
-    }
+    
+    const datePicker = useSelector(state => state.datePickerReducer)
+    const numberGuest = useSelector(state => state.guestReducer)
 
-    console.log("activeNavForm",activeNavForm)
     return (
-        <div className="header">
-            <div className="navbar" style={{ minWidth: 1600 }}>
-                <div className="navbar__brand">
-                    <FaAirbnb />
-                    <span>airbnb</span>
-                </div>
+        <div className={`header ${scrolling && "bgHeaderScroll"}`}>
+            <div className="navbar" >
+                <Link to="/" onClick={clearReducer} >
+                    <div className="navbar__brand">
+                        <FaAirbnb />
+                        <span>airbnb</span>
+                    </div>
+                </Link>
                 <div className="navbar__content">
-                    {/* <div className="navbar__navigate">
-                        <ul>
-                            <li>Nơi ở</li>
-                            <li>Trải nghiệm</li>
-                            <li>Trải nghiệm trực tuyến</li>
-                        </ul>
-                    </div> */}
                     <div className="navbar__input">
                         <form ref={formRef} >
                             <div className="navbar__input-content">
@@ -145,13 +115,11 @@ export default function Header() {
                                 </div>
                                 <div className={`navbar__input-item ${activeNavForm === "checkIn" && "active"} `} onClick={() => handleNavForm("checkIn")} >
                                     <h5>Nhận phòng</h5>
-                                    {!startDate ? <p>Thêm ngày</p> : <p>{startDate.format("DD/MM/YYYY")}</p>}
-
-
+                                    {!datePicker.startDate ? <p>Thêm ngày</p> : <p>{datePicker.startDate.format("DD/MM/YYYY")}</p>}
                                 </div>
                                 <div className={`navbar__input-item ${activeNavForm === "checkOut" && "active"} `} onClick={() => handleNavForm("checkOut")} >
                                     <h5>Trả phòng</h5>
-                                    {!endDate ? <p>Thêm ngày</p> : <p>{endDate.format("DD/MM/YYYY")}</p>}
+                                    {!datePicker.endDate ? <p>Thêm ngày</p> : <p>{datePicker.endDate.format("DD/MM/YYYY")}</p>}
                                 </div>
                                 <div className={`navbar__input-item ${activeNavForm === "guest" && "active"} `}  >
                                     <div className="navbar__input--guest" onClick={() => handleNavForm("guest")}>
@@ -162,8 +130,9 @@ export default function Header() {
                                             <span>Thêm khách</span>
                                         }
                                     </div>
-                                    <div className="searchIcon" onClick={handleSubmitForm}> 
-                                    <Link to = {`/location/${informationBooking.location._id}`}><FiSearch /></Link></div>
+                                    <div className="searchIcon" onClick={handleSearchRoom}>
+                                        <Link to={`${location && `/location/${locationId}`}`}><FiSearch /></Link>
+                                    </div>
                                 </div>
                             </div>
                             <div className="chooseNav">
@@ -180,69 +149,57 @@ export default function Header() {
                                 </div>
                                 <div className={`showDatePicker ${(activeNavForm === "checkIn" || activeNavForm === "checkOut") && "active"}`}>
                                     <div className="datePicker__wrap">
-                                        <DayPickerRangeController
-                                            startDate={startDate} // momentPropTypes.momentObj or null,
-                                            endDate={endDate} // momentPropTypes.momentObj or null,
-                                            onDatesChange={({ startDate, endDate }) => handleOnDatesChange(startDate, endDate)} // PropTypes.func.isRequired,
-                                            focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-                                            onFocusChange={focusedInput => handleFocusChange(focusedInput)} // PropTypes.func.isRequired,
-                                            initialVisibleMonth={() => moment().add(0, "M")} // PropTypes.func or null,
-                                            numberOfMonths={2}
-                                            isOutsideRange={day => !isInclusivelyAfterDay(day, moment())}
-                                            hideKeyboardShortcutsPanel={true}
-                                        />
+                                        <DatePicker />
                                     </div>
                                 </div>
                                 <div className={`showAddPeople ${activeNavForm === "guest" && "active"}`}>
-                                    <div className="showAddPeople__item">
-                                        <div className="showAddPeople__item--content">
-                                            <h5>Người lớn</h5>
-                                            <p>Từ 13 tuổi trở lên</p>
-                                        </div>
-                                        <div className="showAddPeople__item--count">
-                                            <BiMinus className={`showAddPeople--icon ${!numberGuest.adults && "disable"}`} onClick={() => handleNumberGuest("minus", "adults")} />
-                                            <span className="showAddPeople--number"> {numberGuest.adults} </span>
-                                            <BiPlus className="showAddPeople--icon" onClick={() => handleNumberGuest("plus", "adults")} />
-                                        </div>
-                                    </div>
-                                    <div className="showAddPeople__item">
-                                        <div className="showAddPeople__item--content">
-                                            <h5>Trẻ em</h5>
-                                            <p>Độ tuổi 2 - 12</p>
-                                        </div>
-                                        <div className="showAddPeople__item--count">
-                                            <BiMinus className={`showAddPeople--icon ${!numberGuest.children && "disable"}`} onClick={() => handleNumberGuest("minus", "children")} />
-                                            <span className="showAddPeople--number"> {numberGuest.children} </span>
-                                            <BiPlus className="showAddPeople--icon" onClick={() => handleNumberGuest("plus", "children")} />
-                                        </div>
-                                    </div>
-                                    <div className="showAddPeople__item">
-                                        <div className="showAddPeople__item--content">
-                                            <h5>Em bé</h5>
-                                            <p>Dưới 2 tuổi</p>
-                                        </div>
-                                        <div className="showAddPeople__item--count">
-                                            <BiMinus className={`showAddPeople--icon ${!numberGuest.infants && "disable"}`} onClick={() => handleNumberGuest("minus", "infants")} />
-                                            <span className="showAddPeople--number"> {numberGuest.infants} </span>
-                                            <BiPlus className="showAddPeople--icon" onClick={() => handleNumberGuest("plus", "infants")} />
-                                        </div>
-                                    </div>
+                                    <Guest />
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div className="navbar__setting">
-                    <span>Trở thành chủ nhà</span>
-                    <FiGlobe className="navbar__setting--languages" />
-                    <div className="navbar__setting--user">
-                        <VscListFlat className="navbar--settingBar" />
-                        <FaUserCircle className="navbar--userIcon" />
-                    </div>
+                    {/* <span>Trở thành chủ nhà</span>
+                    <FiGlobe className="navbar__setting--languages" /> */}
+
+                    {airbnbUser ?
+                        (<div className="dropdown">
+                            <div className="navbar__setting--user" data-toggle="dropdown" >
+                                <VscListFlat className="navbar--settingBar" />
+                                <FaUserCircle className="navbar--userIcon" style = {{color : "black"}} />
+                            </div>
+
+                            <div className="navbar_login dropdown-menu" >
+                                <ul>
+                                    <li> <Link to="/informationUser">Thông tin</Link> </li>
+                                    <li onClick = {handleLogout}>Đăng xuất</li>
+                                </ul>
+                            </div>
+                        </div>)
+
+                        :
+                        (<div className="dropdown">
+                            <div className="navbar__setting--user" data-toggle="dropdown">
+                                <VscListFlat className="navbar--settingBar" />
+                                <FaUserCircle className="navbar--userIcon" style = {{opacity : 0.5}}/>
+                            </div>
+                            <div className="navbar_login dropdown-menu" >
+                                <ul>
+                                    <li> <Link to="/sign-up">Đăng ký</Link> </li>
+                                    <li><Link to="/login">Đăng nhập</Link></li>
+                                </ul>
+                            </div>
+                        </div>
+                        )
+
+
+                    }
+
                 </div>
             </div>
 
-        </div>
+        </div >
 
     )
 }

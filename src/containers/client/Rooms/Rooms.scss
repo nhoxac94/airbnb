@@ -6,6 +6,7 @@
     display: flex;
     margin-left: 50px;
     padding-top: 120px;    
+    justify-content: space-between;
     
   }
   .showRoom {
@@ -45,7 +46,7 @@
       width: 100%;
       h5 {
         font-size: 1.5em;
-        font-weight: 500;
+        font-weight: 700;
         position: relative;
         padding-bottom: 10px;
         &::after {
@@ -59,6 +60,7 @@
       }
       .utilsRoom {
         padding-bottom: 5px;
+        font-weight: 500;
       }
     }
     .showRoom-review {

@@ -1,14 +1,26 @@
 .footer {
+  margin-top: 50px;
+  padding-top: 20px;
+  background-color: #f7f7f7;
   ul {
     list-style: none;
+    padding: 0;
+    h4 {
+      font-size: 1.2em;
+      font-weight: 700;
+    }
+    li {
+      padding: 5px 0;
+    }
   }
   .copyright {
     display: flex;
     justify-content: space-between;
+    font-size: 1.1em;
 
     li {
       display: inline-block;
-      padding: 0 10px;
+      padding: 10px 10px;
     }
   }
 }

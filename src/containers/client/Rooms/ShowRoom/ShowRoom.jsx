@@ -14,7 +14,6 @@ export default function ShowRoom({ room }) {
     return (
         <Link to={`/rooms/${room._id}`}>
             <div className="showRoom">
-
                 <div className="slider-Img">
                     <img src={room.image} alt="" />
                 </div>
@@ -24,10 +23,11 @@ export default function ShowRoom({ room }) {
                     <p>{utils.join(" - ")}</p>
                     <div className="showRoom-review">
                         <div className="review">
-                            <span> <AiFillStar />{`(${room.locationId.valueate} đánh giá)`}</span>
+                            <span> <AiFillStar style = {{color : "red"}}/>{` ${room.locationId.valueate}`}</span>
                         </div>
-                        <div className="price">
-                            {`${(room.price).toLocaleString()} VND/đêm`}
+                        <div className="price priceRoom">
+                           <span>{`${(room.price).toLocaleString()}VND`}</span>  
+                           <span>/đêm</span>
 
                         </div>
                     </div>

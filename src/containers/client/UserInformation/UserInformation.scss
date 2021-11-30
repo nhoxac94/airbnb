@@ -1,0 +1,40 @@
+.userInformation {
+  padding-top: 120px;
+  max-width: 1600px;
+  margin: auto;
+  .informationUser-card {
+    text-align: center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+    h5 {
+      padding: 10px 0;
+      font-weight: 500;
+    }
+    p {
+      display: inline-block;
+      padding-right: 5px;
+      font-weight: 500;
+      text-align: left;
+    }
+    .informationItem {
+      text-align: left;
+    }
+  }
+  .cardTicket {
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    .cardTicket-item {
+      p {
+        display: inline-block;
+        margin-right: 10px;
+      }
+    }
+  }
+}

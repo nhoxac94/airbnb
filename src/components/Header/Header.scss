@@ -1,15 +1,25 @@
 .header {
+  &.bgHeaderScroll {
+    background-color: #f7f7f7;
+    .navbar__content,
+    .navbar__setting--user {
+      border: 1px solid #0000002e;
+      border-radius: 50px;
+    }
+  }
+  width: 100%;
   color: white;
   padding: 0;
   width: 100%;
   position: fixed;
   z-index: 9;
+  padding: 20px 0;
   .navbar {
+    max-width: 1600px;
+    margin: auto;
+    width: 100%;
     padding: 0;
     z-index: 2;
-    position: absolute;
-    margin: 0 calc((100vw - 1600px) / 2);
-    align-items: flex-start;
     padding: 20px 0;
   }
   .navbar__brand {
@@ -19,7 +29,6 @@
     line-height: 64px;
   }
   .navbar__content {
-    margin-left: 10em;
     .navbar__navigate {
       text-align: center;
       ul {
@@ -133,7 +142,7 @@
           content: "";
           width: 1px;
           height: 70%;
-          background-color: rgba(0, 0, 0, 0.2);
+          background-color: rgba(0, 0, 0, 0.1);
           position: absolute;
           top: 15%;
           right: 0px;
@@ -285,6 +294,7 @@
     display: flex;
     align-items: center;
     height: 64px;
+    position: relative;
     span {
       font-size: 1.2em;
       cursor: pointer;
@@ -309,16 +319,42 @@
       color: rgba(0, 0, 0, 0.575);
       background-color: white;
       border-radius: 50px;
-      padding: 7px 10px;
+      padding: 7px 15px;
       span {
         margin: 0 2px;
       }
       .navbar--settingBar {
-        font-size: 1.3em;
+        font-size: 1.5em;
         margin-right: 5px;
       }
       .navbar--userIcon {
-        font-size: 2em;
+        font-size: 2.5em;
+      }
+    }
+    .navbar_login {
+      position: absolute;
+      top: 60px;
+      right: 0;
+      background-color: #f7f7f7;
+      color: black;
+      font-size: 1.2em;
+      width: 120px;
+      border-radius: 10px;
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 0;
+        li {
+          padding: 10px;
+          cursor: pointer;
+          a {
+            color: black;
+          }
+          &:hover {
+            background-color: #0000001d;
+          }
+        }
       }
     }
   }

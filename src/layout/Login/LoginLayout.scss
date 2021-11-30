@@ -1,0 +1,195 @@
+// @import "/src/scss/main.scss";
+
+body {
+  margin: 0;
+  color: #6a6f8c;
+  background: #c8c8c8;
+  font: 600 16px/18px "Open Sans", sans-serif;
+}
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+.clearfix:after,
+.clearfix:before {
+  content: "";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+  display: block;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.login-airbnb {
+  background-image: url('/assets/imgs/bg-login.jpg');
+  min-height: 100vh;
+  padding-top: 5%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.login-wrap {
+  width: 100%;
+  margin: auto;
+  max-width: 525px;
+  min-height: 760px;
+  position: relative;
+  background: url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg)
+    no-repeat center;
+  background-size: cover;
+  box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+.login-html {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 30px 70px 50px 70px;
+  background: rgba(40, 57, 101, 0.9);
+
+  a {
+	  font-size: 20px;
+	  color: white;
+	  &.active {
+		  color: #97bcff;
+		  text-decoration: underline #97bcff;
+	  }
+  }
+}
+
+.login-html .tab,
+.login-form .group .label,
+.login-form .group .button {
+  text-transform: uppercase;
+}
+.login-html .tab {
+  font-size: 22px;
+  margin-right: 15px;
+  padding-bottom: 5px;
+  margin: 0 15px 10px 0;
+  display: inline-block;
+  border-bottom: 2px solid transparent;
+}
+
+.login-html .checked {
+  color: #fff;
+  border-color: #1161ee;
+  text-decoration: underline solid white;
+}
+.login-form {
+  min-height: 345px;
+  position: relative;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.login-form .group,
+.login-form .group .input,
+.login-form .group .button {
+  width: 100%;
+  color: #fff;
+  display: block;
+}
+.login-form .input,
+.login-form .group .button {
+  border: none;
+  padding: 15px 20px;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.login-form .group .label {
+  color: #aaa;
+  font-size: 12px;
+}
+.login-form .group .button {
+  background: #1161ee;
+}
+
+.login-html .checked + .tab + .sign-up + .tab + .login-form .sign-in-htm {
+  transform: rotate(0);
+}
+
+.hr {
+  height: 2px;
+  margin: 00px 0 50px 0;
+  background: rgba(255, 255, 255, 0.2);
+}
+.foot-lnk {
+  text-align: center;
+}
+
+.loginError {
+  text-align: center;
+  background-color: white;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.sign-up-htm {
+  .group {
+    display: flex;
+    label {
+      width: 35%;
+      display: flex;
+      align-items: center;
+    }
+    .datePicker {
+      width: 100%;
+      color: #fff;
+      display: block;
+      border: none;
+      padding: 15px 20px;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.1);
+	  input {
+		  color: #fff;
+	  }
+    }
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    .selectOption {
+      width: fit-content;
+      position: relative;
+    }
+    .gender {
+      width: 100px;
+      margin-right: 190px;
+    }
+    option {
+      background-color: #515e82;
+    }
+    .button {
+      text-align: center;
+    }
+  }
+
+  small {
+	  margin-left: 100px;
+	//   height: 15px;
+  }
+
+}
+
+// @include responsive ("mobile") {
+// 	.container-fluid {
+// 		padding: 0!important;
+// 	}
+// 	.login-movie {
+// 		padding: 0;
+// 		margin: 0;
+// 	}
+// 	.login-wrap {
+// 		min-height: 730px;
+// 	}
+// 	.login-html {
+// 		padding : 20px 10px 20px 10px
+// 	}
+// }
