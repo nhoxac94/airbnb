@@ -15,21 +15,22 @@ function UserInformation(props) {
 
     useEffect(() => {
         return userApi.fetchInformationUser(userInformation.user._id)
-            .then(res => setUserInformationEdit(res.data))
+            .then(res => {
+                setUserInformationEdit(res.data);
+                console.log(res.data)
+                res.data.tickets.map(ticket => {
+                    userApi.fetchTicketDetail(ticket)
+                        .then(res => {
+                            setTicketUser(arr => [...arr, res])
+                        })
+                        .catch(err => console.log(err))
+                }
+                )
+            })
             .catch(err => console.log(err))
     }, [])
 
-    useEffect(() => {
-        userInformationEdit?.tickets.map(ticket => {
-            userApi.fetchTicketDetail(ticket)
-                .then(res => {
-                    setTicketUser(arr => [...arr, res])
-                }
-                )
-                .catch(err => console.log(err))
-        }
-        )
-    }, [])
+
     if (!userInformationEdit || !ticketUser) return <Loader />
     return (
         <div className="userInformation">
